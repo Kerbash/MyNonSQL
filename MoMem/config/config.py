@@ -1,0 +1,3 @@
+ROOT_DIR = "F:\\MoMem\\"
+MONODE_EXTENSION = ".mn"
+FILE_ID_LENGTH = 15
