@@ -3,11 +3,21 @@ import pickle
 from MoMem.MoNode.monode_pickle import *
 from MoMem.MoNode import monode
 from MoMem.MoNode.monode_basic import file_to_monode
+from MoMem.MoNode.monode_pickle import __dump_dict, __load_dict
+
+
 
 # Create a MoNode object for toffu.png
-toffu = file_to_monode("toffu.png", open("image\\toffu.png", "rb").read(), "A picture of the glorious Toffu", note=[], tags=["toffu", "picture"])
+toffu = file_to_monode("toffu.png", open("image\\toffu.png", "rb").read(), "A picture of the glorious Toffu", note={"name": "MOOPA", "CAKE": "VANILLA"}, tags=["toffu", "picture"])
+
 
 p = dump(toffu)
+n = load(p)
+
+# test write the image as pp.png
+open("pp.png", "wb").write(n.data)
+
+"""
 print(f"lens {len(p)}")
 print(f"header {p[:2]}")
 print(f"length {int.from_bytes(p[2:10], 'big')}")
@@ -44,4 +54,4 @@ for i in range(n):
     curpos += 8
     print(f"Object {i} data {p[curpos:curpos+size]}")
     curpos += size
-    print()
+    print()"""

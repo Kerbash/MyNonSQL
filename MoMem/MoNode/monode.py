@@ -21,16 +21,16 @@ PADDING_LENGTH_SIZE = 10
 
 class MoNode:
     """
-    # Name : The file name
-    # Type : The file type (img, txt, video, etc.)
+    # name : The file name
+    # type : The file type (img, txt, video, etc.)
 
-    # Data : The file data
-    # Size : The file size in bytes
+    # data : The file data
+    # size : The file size in bytes
 
-    # Desc : A description of the file
-    # Note : Other details as dictionary
-    # Tags : A list of tags for the file
-    # Modi : The date the file was created or last modified
+    # desc : A description of the file
+    # notes : Other details as dictionary
+    # tags : A list of tags for the file
+    # modi : The date the file was created or last modified
     """
 
     def __init__(self, name, f_type, data, size = None, description="", notes={}, tags=[], date=None):
@@ -38,7 +38,7 @@ class MoNode:
         Create a MoNode (SUSSY FUNCTION, USE monode_basic.file_to_monode() INSTEAD)
 
         :param name: file name and extension
-        :param type: file type
+        :param f_type: file type
         :param size: file size in bytes
 
         :param data: the file data
@@ -49,33 +49,35 @@ class MoNode:
         :param modi: the date the file was created or last modified
         """
         if len(name) > PADDING_LENGTH:
-            raise ValueError(f"Name is too long {len(name)} > {PADDING_LENGTH}")
-        self.Name = name
+            raise ValueError(f"name is too long {len(name)} > {PADDING_LENGTH}")
+        self.name = name
 
         if len(f_type) > PADDING_LENGTH:
-            raise ValueError(f"Type is too long {len(f_type)} > {PADDING_LENGTH}")
-        self.Type = f_type
+            raise ValueError(f"type is too long {len(f_type)} > {PADDING_LENGTH}")
+        self.type = f_type
 
         if size is None:
-            self.Size = len(data)
+            self.size = len(data)
         else:
-            self.Size = size
-        if len(str(self.Size)) > PADDING_LENGTH_SIZE:
-            raise ValueError(f"Size is too long {len(str(self.Size))} > {PADDING_LENGTH_SIZE}")
+            self.size = size
+        if len(str(self.size)) > PADDING_LENGTH_SIZE:
+            raise ValueError(f"size is too long {len(str(self.size))} > {PADDING_LENGTH_SIZE}")
 
         if date is None:
-            self.Modi = datetime.now()
+            self.modi = datetime.now()
+        else:
+            self.modi = date
 
-        # check if self.Modi is too long
-        if len(str(self.Modi)) > PADDING_LENGTH:
-            raise ValueError(f"Modi is too long {len(str(self.Modi))} > {PADDING_LENGTH}")
+        # check if self.modi is too long
+        if len(str(self.modi)) > PADDING_LENGTH:
+            raise ValueError(f"modi is too long {len(str(self.modi))} > {PADDING_LENGTH}")
 
-        self.Desc = description
+        self.desc = description
 
-        self.Note = notes
-        self.Tags = tags
+        self.notes = notes
+        self.tags = tags
 
-        self.Data = data
+        self.data = data
 
     def __str__(self):
         """
@@ -93,7 +95,7 @@ class MoNode:
         the structure of a pickle is:
 
         first line is the offset key (which contains the byte offset of each element)
-        [Name, Type, Size, Modi, Desc, Note, Tags, Data]
+        [name, type, size, modi, desc, notes, tags, data]
         second line is the actual pickle data
 
         :return: the MoNode as a pickle
@@ -112,10 +114,10 @@ class MoNode:
         """
         # remove the padding
         data = pickle.loads(data)
-        data.Name = data.Name.strip()
-        data.Type = data.Type.strip()
-        data.Size = int(data.Size)
-        data.Modi = datetime.strptime(data.Modi.strip(), "%Y-%m-%d %H:%M:%S.%f")
+        data.name = data.name.strip()
+        data.type = data.type.strip()
+        data.size = int(data.size)
+        data.modi = datetime.strptime(data.modi.strip(), "%Y-%m-%d %H:%M:%S.%f")
         return data
 
     @staticmethod
